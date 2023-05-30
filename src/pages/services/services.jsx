@@ -8,6 +8,7 @@ import routes from "../../api/routes";
 import ModalDescription from "../../components/modalDescription/modalDescription";
 import OptionModal from "../../components/optionModal/optionModal";
 import { useNavigate } from "react-router-dom";
+import { GreenNotify } from "../../helper/helper";
 
 const Services = () => {
   const [isloading, setIsLoading] = useState(false);
@@ -18,6 +19,7 @@ const Services = () => {
   const [description, setDescription] = useState([]);
   const [photos, setPhotos] = useState([]);
   const [optionsM, setOptionsM] = useState([]);
+  const [getServiceapi, setGetServiceApi] = useState(false);
 
   const getService = () => {
     let getRes = (res) => {
@@ -29,6 +31,27 @@ const Services = () => {
     callApi(
       "GET",
       routes.getAllServices,
+      null,
+      setIsLoading,
+      getRes,
+      (error) => {
+        console.log("error", error);
+      }
+    );
+  };
+
+  const deleteService = (id) => {
+    setGetServiceApi(false);
+    let getRes = (res) => {
+      console.log("res of deleteService", res);
+      GreenNotify("Service is deleted successfully");
+      setGetServiceApi(true);
+      // setShowModal(false);
+    };
+
+    callApi(
+      "DELETE",
+      `${routes.deleteService}/${id}`,
       null,
       setIsLoading,
       getRes,
@@ -128,12 +151,24 @@ const Services = () => {
         </div>
       ),
       delete: (
-        <div className="server-roles-trash-btn">
+        <div
+          onClick={() => deleteService(item?._id)}
+          className="server-roles-trash-btn"
+        >
           <img src={redTrash} alt="red-trash" />
         </div>
       ),
       edit: (
-        <div className="product-list-edit-icon">
+        <div
+          onClick={() =>
+            navigate("/update-service", {
+              state: {
+                item: item,
+              },
+            })
+          }
+          className="product-list-edit-icon"
+        >
           <img src={editIcon} />
         </div>
       ),
@@ -149,7 +184,7 @@ const Services = () => {
 
   useEffect(() => {
     getService();
-  }, []);
+  }, [getServiceapi]);
   return (
     <div className="admin-products-main-container">
       <Loader loading={isloading} />

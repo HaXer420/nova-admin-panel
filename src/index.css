@@ -13,3 +13,16 @@
   --grey-color: #dcedff;
   --white: #fff;
 }
+
+.Toastify__toast-container {
+  font-size: 16px; /* Adjust the font size as per your requirement */
+}
+
+/* Override the toast icon size */
+.Toastify__toast-icon {
+  font-size: 22px; /* Adjust the icon size as per your requirement */
+}
+
+.anticon {
+  color: #fff !important;
+}

@@ -1,5 +1,5 @@
-import React, { useRef, useState } from "react";
-import "./addNewService.css";
+import React, { useState, useRef } from "react";
+import Loader from "../../components/loader/loader";
 import {
   Breadcrumb,
   Table,
@@ -9,40 +9,45 @@ import {
   InputNumber,
   Button,
 } from "antd";
-import { homeIcon, redTrash } from "../../assets";
-import { GreenNotify, RedNotify, upload } from "../../helper/helper";
-import Loader from "../../components/loader/loader";
+import { homeIcon } from "../../assets";
+import { useLocation, useNavigate } from "react-router-dom";
+import { GreenNotify, upload } from "../../helper/helper";
 import { callApi } from "../../api/apiCaller";
 import routes from "../../api/routes";
-import { useNavigate } from "react-router-dom";
 
 const { TextArea } = Input;
-const AddNewService = () => {
+const UpdateService = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const item = location?.state?.item;
+  // console.log("date", item);
   const [isloading, setIsLoading] = useState(false);
-  const [gender, setGender] = useState("male");
-  const [special, setSpecial] = useState(false);
+  const [gender, setGender] = useState(item.type);
+  const [special, setSpecial] = useState(item?.special);
   const [optionTitle, setOptionTitle] = useState("");
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(item?.title);
   const [des1Title, setDes1Title] = useState("");
+
   const [des1, setDes1] = useState("");
-  const [descriptions, setDescriptions] = useState([]);
-  const [options, setOptions] = useState([]);
+  const [descriptions, setDescriptions] = useState(item?.description);
+  const [options, setOptions] = useState(item?.options);
   const [count, setCount] = useState(0);
   const fileInputRef = useRef(null);
   const fileInputRef1 = useRef(null);
   const fileInputRef2 = useRef(null);
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState(item?.photos);
   let dummyImage =
     "http://www.listercarterhomes.com/wp-content/uploads/2013/11/dummy-image-square.jpg";
-  const [image, setImage] = useState(dummyImage);
+  const [image, setImage] = useState(
+    item?.backgroundphoto ? item?.backgroundphoto : dummyImage
+  );
   const [image1, setImage1] = useState(dummyImage);
 
   const pickImageFile = () => {
     fileInputRef.current.click();
   };
-  const pickImageFile1 = () => {
-    fileInputRef1.current.click();
+  const pickImageFile1 = (i) => {
+    i == 0 ? fileInputRef1.current.click() : fileInputRef2.current.click();
   };
 
   const onChange = (e) => {
@@ -52,14 +57,21 @@ const AddNewService = () => {
     setGender(value);
   };
 
+  const updateImage1 = (url) => {
+    images[0] = url;
+  };
+  const updateImage2 = (url) => {
+    images[1] = url;
+  };
+
   const addDescription = () => {
     let arr = [];
     arr = [...descriptions, { title: des1Title, decription: des1 }];
-    images.push(image1);
+
     setDescriptions(arr);
     setDes1Title("");
     setDes1("");
-    setImage1("");
+
     console.log("arr", arr, images);
   };
 
@@ -71,21 +83,11 @@ const AddNewService = () => {
     setOptionTitle("");
   };
 
-  const createService = () => {
-    if (title == "") return RedNotify("Enter Title of service");
-    if (image == "") return RedNotify("Select BackGround Image");
-    if (descriptions.length == 0)
-      return RedNotify("Enter your service Description");
-    if (images.length == 0) return RedNotify("Select images for description");
-    if (options.length == 0) return RedNotify("Select options");
+  const updateService = () => {
     let getRes = (res) => {
-      if (res.status == 201) {
-        GreenNotify("Service Created Successfully");
-        navigate("/services");
-      } else {
-        RedNotify(res.message);
-      }
-      console.log("res of create service", res);
+      console.log("res of update Service", res);
+      GreenNotify("Service is updated successfully");
+      navigate("/services");
     };
 
     let body = {
@@ -99,8 +101,8 @@ const AddNewService = () => {
     };
 
     callApi(
-      "POST",
-      routes.createService,
+      "PATCH",
+      `${routes.updateService}/${item?._id}`,
       body,
       setIsLoading,
       getRes,
@@ -109,7 +111,6 @@ const AddNewService = () => {
       }
     );
   };
-
   return (
     <div className="admin-products-main-container">
       <Loader loading={isloading} />
@@ -119,10 +120,10 @@ const AddNewService = () => {
         </div>
         <Breadcrumb.Item>Home</Breadcrumb.Item>
         <Breadcrumb.Item>Services</Breadcrumb.Item>
-        <Breadcrumb.Item>Add new Service</Breadcrumb.Item>
+        <Breadcrumb.Item>update Service</Breadcrumb.Item>
       </Breadcrumb>
       <div className="configure-server-roles-main-heading-container">
-        <h1>Add New Service</h1>
+        <h1>Update Service</h1>
         <div></div>
       </div>
       <div className="add-service-input-main-container">
@@ -137,6 +138,8 @@ const AddNewService = () => {
       <div className="add-service-input-main-container">
         <h3>Special</h3>:{" "}
         <Checkbox
+          //   value={special}
+          defaultChecked={special}
           style={{ maxWidth: "50%", marginLeft: "2rem" }}
           onChange={onChange}
         ></Checkbox>
@@ -144,7 +147,7 @@ const AddNewService = () => {
       <div className="add-service-input-main-container">
         <h3>Gender</h3>:{" "}
         <Select
-          defaultValue="male"
+          defaultValue={gender}
           style={{
             width: 220,
             marginLeft: "2rem",
@@ -177,7 +180,14 @@ const AddNewService = () => {
         type="file"
         ref={fileInputRef1}
         style={{ display: "none" }} // Hide the file input
-        onChange={upload((url) => setImage1(url), setIsLoading)}
+        onChange={upload((url) => updateImage1(url), setIsLoading)}
+      />
+
+      <input
+        type="file"
+        ref={fileInputRef2}
+        style={{ display: "none" }} // Hide the file input
+        onChange={upload((url) => updateImage2(url), setIsLoading)}
       />
 
       <div className="add-service-input-main-container">
@@ -192,33 +202,55 @@ const AddNewService = () => {
 
       <div className="add-service-option-main-container">
         <div style={{ width: "80%" }}>
+          {descriptions?.map((item, n) => (
+            <>
+              <div className="add-service-input-main-container">
+                <h3>Title</h3>:
+                <Input
+                  value={item.title}
+                  onChange={(e) =>
+                    setDescriptions(
+                      descriptions.map((v, i) =>
+                        i == n ? { ...v, title: e.target.value } : v
+                      )
+                    )
+                  }
+                  style={{ maxWidth: "50%", marginLeft: "2rem" }}
+                  placeholder="Title "
+                />
+              </div>
+              <div className="add-service-input-main-container">
+                <h3>Description</h3>:
+                <TextArea
+                  value={item?.decription}
+                  onChange={(e) =>
+                    setDescriptions(
+                      descriptions.map((v, i) =>
+                        i == n ? { ...v, decription: e.target.value } : v
+                      )
+                    )
+                  }
+                  rows={8}
+                  style={{ maxWidth: "50%", marginLeft: "2rem" }}
+                  placeholder="Description"
+                />
+              </div>
+            </>
+          ))}
           <div className="add-service-input-main-container">
-            <h3>Title</h3>:
-            <Input
-              value={des1Title}
-              onChange={(e) => setDes1Title(e.target.value)}
-              style={{ maxWidth: "50%", marginLeft: "2rem" }}
-              placeholder="Title "
-            />
-          </div>
-          <div className="add-service-input-main-container">
-            <h3>Description</h3>:
-            <TextArea
-              value={des1}
-              onChange={(e) => setDes1(e.target.value)}
-              rows={8}
-              style={{ maxWidth: "50%", marginLeft: "2rem" }}
-              placeholder="Description"
-            />
-          </div>
-          <div className="add-service-input-main-container">
-            <h3>Image</h3>:{" "}
-            <div
-              onClick={pickImageFile1}
-              className="add-service-back-ground-image"
-            >
-              <img src={image1 == "" ? dummyImage : image1} alt="image1" />
-            </div>
+            <h3>Images</h3>:{" "}
+            {images?.map((item, i) => (
+              <div
+                //   onClick={() => updateImage(i)}
+                className="add-service-back-ground-image"
+              >
+                <img
+                  onClick={() => pickImageFile1(i)}
+                  src={item}
+                  alt="image1"
+                />
+              </div>
+            ))}
           </div>
         </div>
 
@@ -233,7 +265,7 @@ const AddNewService = () => {
           ) : (
             <h2 style={{ color: "red" }}>No description is added</h2>
           )}
-          {images.map((item) => (
+          {images?.map((item) => (
             <img src={item} alt="image" />
           ))}
         </div>
@@ -253,6 +285,43 @@ const AddNewService = () => {
 
       <div className="description-title-add-service">
         <h1>Options</h1>
+      </div>
+
+      <div className="add-service-option-main-container">
+        {options?.map((item, n) => (
+          <div style={{ width: "60%" }}>
+            <div className="add-service-input-main-container">
+              <h3>Name</h3>:
+              <Input
+                value={item?.name}
+                onChange={(e) =>
+                  setOptions(
+                    options.map((v, i) =>
+                      i == n ? { ...v, name: e.target.value } : v
+                    )
+                  )
+                }
+                style={{ maxWidth: "100%", marginLeft: "2rem" }}
+                placeholder="Title for description"
+              />
+            </div>
+            <div className="add-service-input-main-container">
+              <h3>Price</h3>:
+              <InputNumber
+                style={{ marginLeft: "3rem", width: "100%" }}
+                value={item?.price}
+                onChange={(e) =>
+                  setOptions(
+                    options.map((v, i) => (i == n ? { ...v, price: e } : v))
+                  )
+                }
+                prefix="$"
+                min={0}
+                placeholder="00.00"
+              />
+            </div>
+          </div>
+        ))}
       </div>
 
       <div className="add-service-option-main-container">
@@ -300,12 +369,12 @@ const AddNewService = () => {
         </div>
       </div>
 
-      <Button type="primary" onClick={createService}>
-        Create Service
+      <Button onClick={updateService} type="primary">
+        Update Service
       </Button>
       <div style={{ marginBottom: "5rem" }}></div>
     </div>
   );
 };
 
-export default AddNewService;
+export default UpdateService;
