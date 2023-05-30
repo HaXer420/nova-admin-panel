@@ -82,7 +82,7 @@ const ProductOrder = () => {
       name: `${item?.user?.firstname} ${item?.user?.lastname} `,
       profileImage: (
         <div className="product-list-image">
-          <Image width={60} src={item?.user?.image} />
+          <Image width={50} src={item?.user?.image} />
           {/* <img src={item?.user?.image} alt="profile-image" /> */}
         </div>
       ),

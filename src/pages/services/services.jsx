@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./services.css";
-import { Breadcrumb, Table } from "antd";
+import { Breadcrumb, Table, Image } from "antd";
 import Loader from "../../components/loader/loader";
 import { addIcon, editIcon, homeIcon, options, redTrash } from "../../assets";
 import { callApi } from "../../api/apiCaller";
@@ -123,7 +123,8 @@ const Services = () => {
       special: item?.special ? "True" : "False",
       backGround: (
         <div className="services-background-image">
-          <img src={item?.backgroundphoto} alt="" />
+          {/* <img src={item?.backgroundphoto} alt="" /> */}
+          <Image width={60} src={item?.backgroundphoto} />
         </div>
       ),
       description: (

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./products.css";
-import { Breadcrumb, Button, Select } from "antd";
+import { Breadcrumb, Button, Select, Image } from "antd";
 import { addIcon, editIcon, homeIcon, redTrash } from "../../assets";
 import { Table } from "antd";
 import ModalAddProduct from "../../components/ModalAddProduct/modalAddProduct";
@@ -114,7 +114,7 @@ const Products = () => {
       price: `$${item?.price}`,
       image: (
         <div className="product-list-image">
-          <img src={item?.image} alt="" />
+          <Image width={60} src={item?.image} />
         </div>
       ),
       delete: (

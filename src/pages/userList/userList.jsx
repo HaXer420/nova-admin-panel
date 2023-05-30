@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./userList.css";
-import { Breadcrumb, Button, Select, Table } from "antd";
+import { Breadcrumb, Button, Select, Table, Image } from "antd";
 import { crossIcon, homeIcon, redTrash, trueIcon } from "../../assets";
 import { callApi } from "../../api/apiCaller";
 import routes from "../../api/routes";
@@ -71,7 +71,7 @@ const UserList = () => {
       dob: moment(item?.dob).format("MM-DD-YYYY"),
       profilePicture: (
         <div className="product-list-image">
-          <img src={item?.image} alt="" />
+          <Image width={50} src={item?.image} alt="profile-image" />
         </div>
       ),
       verified: (

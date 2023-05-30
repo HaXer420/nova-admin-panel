@@ -8,6 +8,7 @@ import {
   Select,
   InputNumber,
   Button,
+  Image,
 } from "antd";
 import { homeIcon } from "../../assets";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -266,7 +267,7 @@ const UpdateService = () => {
             <h2 style={{ color: "red" }}>No description is added</h2>
           )}
           {images?.map((item) => (
-            <img src={item} alt="image" />
+            <Image width={180} src={item} alt="image" />
           ))}
         </div>
       </div>
