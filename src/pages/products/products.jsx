@@ -9,6 +9,7 @@ import { callApi } from "../../api/apiCaller";
 import Loader from "../../components/loader/loader";
 import { useDispatch } from "react-redux";
 import { productItem } from "../../redux/userDataSlice";
+import DescriptionModal from "../../components/descriptionModal/descriptionModal";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,8 @@ const Products = () => {
   const [product, setProduct] = useState();
   const [addProduct, setAddProduct] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [showModalDes, setShowModalDes] = useState(false);
+  const [pDescription, setPdescription] = useState("");
   const [getProduct, setGetProduct] = useState(false);
   const getProducts = () => {
     let getRes = (res) => {
@@ -108,7 +111,25 @@ const Products = () => {
     return {
       key: index,
       title: item?.title,
-      description: item?.description,
+      description: (
+        <div>
+          <p style={{ fontSize: "12px" }}>
+            {item?.description.length > 10
+              ? item?.description.substring(0, 30) + "..."
+              : item?.description}{" "}
+            <span
+              onClick={() => {
+                setShowModalDes(true);
+                setPdescription(item?.description);
+              }}
+              style={{ color: "#34adf4", cursor: "pointer", fontWeight: 600 }}
+            >
+              {" "}
+              See More{" "}
+            </span>
+          </p>
+        </div>
+      ),
       quantity: item?.qty,
       salePrice: `$${item?.salePrice ? item?.salePrice : item?.price}`,
       price: `$${item?.price}`,
@@ -161,6 +182,13 @@ const Products = () => {
           setIsLoading={setIsLoading}
           addProduct={addProduct}
           setAddProduct={setAddProduct}
+        />
+      )}
+      {showModalDes && (
+        <DescriptionModal
+          showModalDes={showModalDes}
+          setShowModalDes={setShowModalDes}
+          description={pDescription}
         />
       )}
       <Loader loading={isloading} />

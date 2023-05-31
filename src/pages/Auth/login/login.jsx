@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./login.css";
 import { Form, Input, Button, Checkbox } from "antd";
+import { DeviceUUID } from "device-uuid";
 import { UserOutlined } from "@ant-design/icons";
 import { callApi } from "../../../api/apiCaller";
 import { useDispatch } from "react-redux";
@@ -11,6 +12,8 @@ import {
 } from "../../../redux/userDataSlice";
 import { useNavigate } from "react-router-dom";
 import routes from "../../../api/routes";
+import Loader from "../../../components/loader/loader";
+import { GreenNotify, RedNotify } from "../../../helper/helper";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -18,22 +21,29 @@ const Login = () => {
   const [isloading, setIsLoading] = useState(false);
 
   const onFinish = (values) => {
+    let deviceId = localStorage.getItem("deviceId");
+    if (!deviceId) {
+      let id = new DeviceUUID().get();
+      localStorage.setItem("deviceId", id);
+      deviceId = id;
+    }
     console.log("Success:", values);
     let getRes = (res) => {
       if (res.status == 200) {
         dispatch(userData(res?.data?.user));
         dispatch(accessToken(res?.data?.token));
         dispatch(refreshToken(res?.data?.refreshToken));
+        GreenNotify("Login Successfully");
         // GreenNotify(res.message);
         navigate("/", { replace: true });
       } else {
-        // RedNotify(res.message);
+        RedNotify(res.message);
       }
     };
     let body = {
       email: values.email,
       password: values.password,
-      device: { id: "nova-web", deviceToken: "angg" },
+      device: { id: deviceId, deviceToken: "angg" },
     };
     callApi("POST", routes.signIn, body, setIsLoading, getRes, (error) => {});
   };
@@ -44,6 +54,7 @@ const Login = () => {
   return (
     <div className="admin-panel-login">
       <div className="login-main-container">
+        <Loader loading={isloading} />
         <h1 style={{ marginBottom: "3rem" }}>Login</h1>
         <Form
           name="basic"
