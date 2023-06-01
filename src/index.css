@@ -22,7 +22,17 @@
 .Toastify__toast-icon {
   font-size: 22px; /* Adjust the icon size as per your requirement */
 }
-
-.anticon {
-  color: #fff !important;
+.ant-table-filter-trigger span {
+  color: rgb(253, 253, 253);
 }
+.ant-table-column-sorter-up.active svg,
+.ant-table-column-sorter-down.active svg {
+  fill: rgb(3, 13, 91); /* Replace 'red' with your desired color */
+}
+.ant-table-column-sorter-up svg,
+.ant-table-column-sorter-down svg {
+  fill: rgb(255, 255, 255); /* Replace 'red' with your desired color */
+}
+/* .anticon {
+  color: #fff !important;
+} */

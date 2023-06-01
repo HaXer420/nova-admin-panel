@@ -27,7 +27,7 @@ const Login = () => {
       localStorage.setItem("deviceId", id);
       deviceId = id;
     }
-    console.log("Success:", values);
+
     let getRes = (res) => {
       if (res.status == 200) {
         dispatch(userData(res?.data?.user));

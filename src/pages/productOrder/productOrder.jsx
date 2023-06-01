@@ -4,6 +4,7 @@ import { crossIcon, homeIcon, redTrash, trueIcon } from "../../assets";
 import { callApi } from "../../api/apiCaller";
 import routes from "../../api/routes";
 import Loader from "../../components/loader/loader";
+import moment from "moment";
 
 const ProductOrder = () => {
   const [bookedProducts, setBookedProducts] = useState([]);
@@ -31,6 +32,18 @@ const ProductOrder = () => {
       title: "Client Name",
       dataIndex: "name",
       className: "role-name-column-header",
+    },
+    {
+      title: "Date",
+      dataIndex: "date",
+      align: "right",
+      className: "action-column-header",
+      sorter: (a, b) =>
+        moment(a.date, "DD-MM-YYYY").unix() -
+        moment(b.date, "DD-MM-YYYY").unix(),
+      // sorter: (a, b) => {
+      //   console.log("date", a.date, moment(a.date, "DD-MM-YYYY").unix());
+      // },
     },
     {
       title: "Client Image",
@@ -80,6 +93,7 @@ const ProductOrder = () => {
   const data = bookedProducts?.map((item) => {
     return {
       name: `${item?.user?.firstname} ${item?.user?.lastname} `,
+      date: moment(item?.createdAt).format("DD-MM-YYYY"),
       profileImage: (
         <div className="product-list-image">
           <Image width={50} src={item?.user?.image} />

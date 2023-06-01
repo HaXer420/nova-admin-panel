@@ -40,6 +40,7 @@ export const callApi = async (
     localStorage.setItem("deviceId", id);
     deviceId = id;
   }
+
   let token = configureAppStore.getState().userDataSlice.token ?? false;
   //   let token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWJmZDdhMGQ4YzRjODhiMzc0MDQ3YyIsImlhdCI6MTY3OTU1NjEwNn0.2j-EGacy-8AKMS6ukSlwl_irW0h7PPNWha52TTWTM54";
   let refreshToken =

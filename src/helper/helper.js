@@ -49,7 +49,10 @@ export const upload = (cb, setIsLoading) => (evt) => {
     redirect: "follow",
   };
   setIsLoading(true);
-  fetch("https://bd2mxvi3ra.us-east-2.awsapprunner.com/upload", requestOptions)
+  fetch(
+    "https://rxje2xzpme.us-east-1.awsapprunner.com/api/v1/user/upload",
+    requestOptions
+  )
     .then((response) => response.json())
     .then((data) => {
       const url = data.url;

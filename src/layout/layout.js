@@ -22,16 +22,40 @@ import UpdateService from "../pages/updateService/updateService";
 import UserList from "../pages/userList/userList";
 import ProductOrder from "../pages/productOrder/productOrder";
 import ServiceOrder from "../pages/serviceOrder/serviceOrder";
+import { callApi } from "../api/apiCaller";
+import routes from "../api/routes";
+import { useState } from "react";
+import Loader from "../components/loader/loader";
+import { GreenNotify, RedNotify } from "../helper/helper";
 
 const { Header, Content, Footer, Sider } = Layout;
 const LayoutDashboard = () => {
+  const [isloading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const logOut = () => {
-    dispatch(userData(null));
-    dispatch(accessToken(""));
-    dispatch(refreshToken(""));
+    let getRes = (res) => {
+      if (res.status == 200) {
+        GreenNotify(res.message);
+        dispatch(userData(null));
+        dispatch(accessToken(""));
+        dispatch(refreshToken(""));
+      } else {
+        RedNotify(res.message);
+      }
+    };
+
+    let body = {
+      device: {
+        id: localStorage.getItem("deviceId"),
+        deviceToken: "xyz",
+      },
+    };
+
+    callApi("POST", routes.logOut, body, setIsLoading, getRes, (error) => {
+      console.log("error", error);
+    });
   };
   return (
     <Layout
@@ -39,6 +63,7 @@ const LayoutDashboard = () => {
         minHeight: "100vh",
       }}
     >
+      <Loader loading={isloading} />
       <Sider style={{ background: "#0B1B2D" }} width={280}>
         <div
           style={{
@@ -112,6 +137,7 @@ const LayoutDashboard = () => {
           }}
         >
           <Routes>
+            <Route path="/" element={<Products />}></Route>
             <Route path="/products" element={<Products />}></Route>
             <Route path="/services" element={<Services />}></Route>
             <Route path="/new-service" element={<AddNewService />}></Route>

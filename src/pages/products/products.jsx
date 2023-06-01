@@ -10,6 +10,7 @@ import Loader from "../../components/loader/loader";
 import { useDispatch } from "react-redux";
 import { productItem } from "../../redux/userDataSlice";
 import DescriptionModal from "../../components/descriptionModal/descriptionModal";
+import moment from "moment/moment";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -66,6 +67,7 @@ const Products = () => {
       width: 200,
       // render: (text) => <span style={{ color: "#34ADF4" }}>{text}</span>,
     },
+
     {
       title: "Quantity",
       dataIndex: "quantity",
@@ -111,6 +113,7 @@ const Products = () => {
     return {
       key: index,
       title: item?.title,
+
       description: (
         <div>
           <p style={{ fontSize: "12px" }}>
