@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import "./modalAddProduct.css";
-import { Button, Modal, Input, InputNumber, Checkbox } from "antd";
+import { Button, Modal, Input, InputNumber, Checkbox, Image } from "antd";
 import { addIcon, editIcon } from "../../assets";
 import { useSelector } from "react-redux";
 import { callApi } from "../../api/apiCaller";
@@ -14,7 +14,6 @@ const ModalAddProduct = ({
   addProduct,
   setAddProduct,
 }) => {
-
   const [title, setTitle] = useState(addProduct ? "" : item?.title);
   const [description, setDescription] = useState(
     addProduct ? "" : item?.description
@@ -37,6 +36,8 @@ const ModalAddProduct = ({
     fileInputRef.current.click();
   };
 
+  const dummyImage =
+    "https://novathreadbucket.s3.amazonaws.com/nova-app-1685176470232-dummy.PNG";
   //console.log("add product", addProduct);
 
   const handleFileChange = (event) => {
@@ -204,7 +205,7 @@ const ModalAddProduct = ({
         >
           <h2>Image</h2>
           <div className="add-product-modal-image">
-            <img src={image} alt="" />
+            <img src={image ? image : dummyImage} alt="" />
           </div>
         </div>
         <div className="modal-btn-container"></div>

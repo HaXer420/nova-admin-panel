@@ -38,7 +38,7 @@ const UpdateService = () => {
   const fileInputRef2 = useRef(null);
   const [images, setImages] = useState(item?.photos);
   let dummyImage =
-    "http://www.listercarterhomes.com/wp-content/uploads/2013/11/dummy-image-square.jpg";
+    "https://novathreadbucket.s3.amazonaws.com/nova-app-1685176470232-dummy.PNG";
   const [image, setImage] = useState(
     item?.backgroundphoto ? item?.backgroundphoto : dummyImage
   );
