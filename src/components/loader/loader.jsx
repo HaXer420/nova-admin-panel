@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Modal, Space, Spin } from "antd";
+import { BallTriangle } from "react-loader-spinner";
 
 const Loader = ({ loading }) => {
   return (
@@ -8,6 +9,7 @@ const Loader = ({ loading }) => {
       okButtonProps={{ style: { display: "none" } }}
       cancelButtonProps={{ style: { display: "none" } }}
       closeIcon={<div></div>}
+      style={{ marginTop: "20rem", width: "20rem" }}
     >
       <div
         style={{
@@ -18,7 +20,16 @@ const Loader = ({ loading }) => {
           height: "16rem",
         }}
       >
-        <Spin size="large" />
+        <BallTriangle
+          height={100}
+          width={100}
+          radius={5}
+          color="#16375a"
+          ariaLabel="ball-triangle-loading"
+          wrapperClass={{}}
+          wrapperStyle=""
+          visible={true}
+        />
         <h3>Loading..</h3>
       </div>
     </Modal>

@@ -12,6 +12,7 @@ const UserList = () => {
   const [isloading, setIsLoading] = useState(false);
   const getAllUser = () => {
     let getRes = (res) => {
+      console.log("res of user list", res);
       setUsers(res?.data?.data);
     };
 

@@ -36,3 +36,8 @@
 /* .anticon {
   color: #fff !important;
 } */
+
+.ant-modal-content {
+  width: 20rem;
+  margin-left: 20rem;
+}

@@ -2,6 +2,7 @@ import React from "react";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import {
   homeIcon,
+  logOutIcon,
   productIcon,
   productOrder,
   redTrash,
@@ -27,6 +28,7 @@ import routes from "../api/routes";
 import { useState } from "react";
 import Loader from "../components/loader/loader";
 import { GreenNotify, RedNotify } from "../helper/helper";
+import Dashboard from "../pages/dashboard/dashboard";
 
 const { Header, Content, Footer, Sider } = Layout;
 const LayoutDashboard = () => {
@@ -66,14 +68,16 @@ const LayoutDashboard = () => {
       <Loader loading={isloading} />
       <Sider style={{ background: "#0B1B2D" }} width={280}>
         <div
+          onClick={() => navigate("/")}
           style={{
             padding: "2rem 0",
             textAlign: "center",
             color: "white",
             fontSize: "3rem",
+            cursor: "pointer",
           }}
         >
-          Logo
+          NOVA
         </div>
         <Menu
           style={{ marginTop: "5rem" }}
@@ -124,20 +128,25 @@ const LayoutDashboard = () => {
           >
             Service Orders
           </Menu.Item>
-          <Menu.Item onClick={logOut} key="89">
+          <Menu.Item
+            style={{ marginTop: "5rem" }}
+            icon={<img className="side-bar-icon" src={logOutIcon} />}
+            onClick={logOut}
+            key="89"
+          >
             Log Out
           </Menu.Item>
         </Menu>
       </Sider>
       <Layout className="site-layout">
-        <Header2 />
         <Content
           style={{
             background: "#fff",
+            paddingTop: "2rem",
           }}
         >
           <Routes>
-            <Route path="/" element={<Products />}></Route>
+            <Route path="/" element={<Dashboard />}></Route>
             <Route path="/products" element={<Products />}></Route>
             <Route path="/services" element={<Services />}></Route>
             <Route path="/new-service" element={<AddNewService />}></Route>

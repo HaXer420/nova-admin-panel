@@ -104,7 +104,7 @@ const ServiceOrder = () => {
     },
   ];
 
-  const data = bookedServices.map((item) => {
+  const data = bookedServices?.map((item) => {
     return {
       name: `${item?.user?.firstname} ${item?.user?.lastname} `,
       profileImage: (

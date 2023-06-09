@@ -14,7 +14,7 @@ import moment from "moment/moment";
 
 const Products = () => {
   const dispatch = useDispatch();
-  const [isloading, setIsLoading] = useState(false);
+  const [isloading, setIsLoading] = useState(true);
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState();
   const [addProduct, setAddProduct] = useState(false);
@@ -25,7 +25,7 @@ const Products = () => {
   const getProducts = () => {
     let getRes = (res) => {
       setProducts(res?.data);
-      console.log("res of get products", res);
+      // console.log("res of get products", res);
       // setShowModal(false);
     };
 
@@ -37,7 +37,7 @@ const Products = () => {
   const DeleteProduct = (item) => {
     setGetProduct(false);
     let getRes = (res) => {
-      console.log("res of delete product", res);
+      //console.log("res of delete product", res);
       setGetProduct(true);
     };
 
