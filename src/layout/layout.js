@@ -6,6 +6,7 @@ import {
   productIcon,
   productOrder,
   redTrash,
+  reviewIcon,
   serviceIcon,
   serviceOrder,
   userIcon,
@@ -29,6 +30,7 @@ import { useState } from "react";
 import Loader from "../components/loader/loader";
 import { GreenNotify, RedNotify } from "../helper/helper";
 import Dashboard from "../pages/dashboard/dashboard";
+import Reviews from "../pages/Reviews/reviews";
 
 const { Header, Content, Footer, Sider } = Layout;
 const LayoutDashboard = () => {
@@ -129,6 +131,14 @@ const LayoutDashboard = () => {
             Service Orders
           </Menu.Item>
           <Menu.Item
+            style={{ marginBottom: "2rem" }}
+            onClick={() => navigate("/reviews-list")}
+            icon={<img className="side-bar-icon" src={reviewIcon} />}
+            key="108"
+          >
+            Reviews
+          </Menu.Item>
+          <Menu.Item
             style={{ marginTop: "5rem" }}
             icon={<img className="side-bar-icon" src={logOutIcon} />}
             onClick={logOut}
@@ -152,6 +162,7 @@ const LayoutDashboard = () => {
             <Route path="/new-service" element={<AddNewService />}></Route>
             <Route path="/update-service" element={<UpdateService />}></Route>
             <Route path="/user-list" element={<UserList />}></Route>
+            <Route path="/reviews-list" element={<Reviews />}></Route>
             <Route
               path="/products-order-list"
               element={<ProductOrder />}

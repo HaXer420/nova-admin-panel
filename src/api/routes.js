@@ -29,4 +29,5 @@ export default {
 
   // -------------Services-------------//
   getAllUser: BASE_URL + "/user",
+  getallReviews: BASE_URL + "/globalReviews/getall?limit=1000&sort=-createdAt",
 };

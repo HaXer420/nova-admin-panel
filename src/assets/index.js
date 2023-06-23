@@ -16,3 +16,4 @@ export { default as orderIcon1 } from "./oder-d.png";
 export { default as productIcon1 } from "./product-d.png";
 export { default as serviceIcon1 } from "./service-d.png";
 export { default as logOutIcon } from "./log-out.png";
+export { default as reviewIcon } from "./reviews.png";
