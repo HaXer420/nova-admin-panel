@@ -14,47 +14,69 @@ import {
 import Clock from "react-clock";
 import "react-clock/dist/Clock.css";
 import moment from "moment/moment";
+import { callApi } from "../../api/apiCaller";
+import routes from "../../api/routes";
+import Loader from "../../components/loader/loader";
 const Dashboard = () => {
   const [value, setValue] = useState(new Date());
+  const [isloading, setIsLoading] = useState(true);
+  const [state, setState] = useState();
 
   const stateArr = [
     {
       title: "Total User",
-      count: "120",
+      count: state?.allusers,
       icon: userIcon1,
     },
     {
       title: "Total Product",
-      count: "10",
+      count: state?.products,
       icon: productIcon1,
     },
     {
       title: "Total Service",
-      count: "21",
+      count: state?.services,
       icon: serviceIcon1,
     },
     {
       title: "Product Order",
-      count: "70",
+      count: state?.productorder,
       icon: orderIcon1,
     },
     {
       title: "Services Order",
-      count: "90",
+      count: state?.serviceorder,
       icon: orderIcon1,
     },
   ];
 
+  const getState = () => {
+    let getRes = (res) => {
+      setState(res);
+      console.log("res of get state", res);
+      // setShowModal(false);
+    };
+
+    callApi("GET", routes.getState, null, setIsLoading, getRes, (error) => {
+      setState(error);
+      //console.log("error", error);
+    });
+  };
+
   useEffect(() => {
     const interval = setInterval(() => setValue(new Date()), 1000);
-
     return () => {
       clearInterval(interval);
     };
   }, []);
 
+  useEffect(() => {
+    getState();
+  }, []);
+
   return (
     <div className="admin-products-main-container">
+      <Loader loading={isloading} />
       <Breadcrumb separator=">" className="bread-crumb">
         <div className="configure-server-home-icon">
           <img src={homeIcon} alt="home-icon" />
