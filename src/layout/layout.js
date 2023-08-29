@@ -20,6 +20,7 @@ import { accessToken, refreshToken, userData } from "../redux/userDataSlice";
 import { useToken } from "antd/es/theme/internal";
 import Services from "../pages/services/services";
 import AddNewService from "../pages/addNewService/addNewService";
+import Gallery from "../pages/gallery/gallery";
 import UpdateService from "../pages/updateService/updateService";
 import UserList from "../pages/userList/userList";
 import ProductOrder from "../pages/productOrder/productOrder";
@@ -105,6 +106,14 @@ const LayoutDashboard = () => {
           >
             Services
           </Menu.Item>
+          <Menu.Item
+            style={{ marginBottom: "2rem" }}
+            onClick={() => navigate("/gallery")}
+            icon={<img className="side-bar-icon" src={serviceIcon} />}
+            key="20"
+          >
+            Gallery
+          </Menu.Item>
 
           <Menu.Item
             style={{ marginBottom: "2rem" }}
@@ -159,6 +168,7 @@ const LayoutDashboard = () => {
             <Route path="/" element={<Dashboard />}></Route>
             <Route path="/products" element={<Products />}></Route>
             <Route path="/services" element={<Services />}></Route>
+            <Route path="/gallery" element={<Gallery />}></Route>
             <Route path="/new-service" element={<AddNewService />}></Route>
             <Route path="/update-service" element={<UpdateService />}></Route>
             <Route path="/user-list" element={<UserList />}></Route>
