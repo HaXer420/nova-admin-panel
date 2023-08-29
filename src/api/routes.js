@@ -1,9 +1,11 @@
-export const BASE_URL = "https://rxje2xzpme.us-east-1.awsapprunner.com/api/v1";
+// export const BASE_URL = "https://rxje2xzpme.us-east-1.awsapprunner.com/api/v1";
+export const BASE_URL = "http://localhost:4500/api/v1";
 
 export default {
   // -----AUTH------//
   signUp: BASE_URL + "/user/signup",
   signIn: BASE_URL + "/user/login",
+  upload: BASE_URL + "/user/upload",
   sendOTP: BASE_URL + "/user/sendOTP",
   verifyOTP: BASE_URL + "/user/verify",
   forgotPassword: BASE_URL + "/user/forgotPassword",
@@ -19,6 +21,13 @@ export default {
   createProduct: BASE_URL + "/product/create",
   deleteProduct: BASE_URL + "/product/delete",
   allBookedProduct: BASE_URL + "/booking/allbookedproducts",
+
+  // -----------Gallery--------------//
+
+  getGallerys: BASE_URL + "/gallery/getAll?limit=1000",
+  upDateGallery: BASE_URL + "/gallery/update",
+  createGallery: BASE_URL + "/gallery/create",
+  deleteGallery: BASE_URL + "/gallery/delete",
   // -------------Services-------------//
 
   getAllServices: BASE_URL + "/service/getall",
