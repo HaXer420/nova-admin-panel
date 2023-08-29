@@ -62,6 +62,12 @@ const ServiceOrder = () => {
       className: "action-column-header",
     },
     {
+      title: "Guest",
+      dataIndex: "guest",
+      align: "center",
+      className: "action-column-header",
+    },
+    {
       title: "Options",
       dataIndex: "options",
       align: "center",
@@ -115,6 +121,7 @@ const ServiceOrder = () => {
       serviceTitle: item?.service?.title,
       orderNo: item?.order?.orderno,
       Price: `$${item?.amount}`,
+      guest: item?.user.isTemp ? "Yes" : "No",
       options: (
         <div
           onClick={() => {

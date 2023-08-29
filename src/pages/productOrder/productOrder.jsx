@@ -77,6 +77,12 @@ const ProductOrder = () => {
       className: "action-column-header",
     },
     {
+      title: "Guest",
+      dataIndex: "guest",
+      align: "center",
+      className: "action-column-header",
+    },
+    {
       title: "Quantity",
       dataIndex: "quantity",
       align: "center",
@@ -104,6 +110,7 @@ const ProductOrder = () => {
       productName: item?.product?.title,
       orderNo: item?.order?.orderno,
       Price: `$${item?.amount}`,
+      guest: item?.user.isTemp ? "Yes" : "No",
       quantity: item?.quantity,
       ispaid: (
         <div className="server-roles-trash-btn">
