@@ -61,6 +61,24 @@ const UserList = () => {
       align: "center",
       className: "action-column-header",
     },
+    {
+      title: "Guest",
+      dataIndex: "guest",
+      align: "center",
+      className: "action-column-header",
+      filters: [
+        {
+          text: "Guest",
+          value: "Yes",
+        },
+        {
+          text: "User",
+          value: "No",
+        },
+      ],
+      defaultFilteredValue: ["No"],
+      onFilter: (value, record) => record.guest.indexOf(value) === 0,
+    },
   ];
 
   const data = users?.map((item, index) => {
@@ -68,18 +86,19 @@ const UserList = () => {
       key: index,
       firstName: item?.firstname,
       lastName: item?.lastname,
-      email: item?.email,
-      dob: moment(item?.dob).format("MM-DD-YYYY"),
-      profilePicture: (
+      email: item?.isTemp ? "guest@novawaxing.com" : item?.email,
+      dob: item?.isTemp ? "Guest" : moment(item?.dob).format("MM-DD-YYYY"),
+      profilePicture:  item?.isTemp ? "Guest" : (
         <div className="product-list-image">
           <Image width={50} src={item?.image} alt="profile-image" />
         </div>
       ),
-      verified: (
+      verified: item?.isTemp ? "Guest" :  (
         <div className="server-roles-trash-btn">
           <img src={item?.verified ? trueIcon : crossIcon} alt="" />
         </div>
       ),
+      guest: item?.isTemp ? "Yes" : "No",
     };
   });
 
