@@ -66,6 +66,17 @@ const ServiceOrder = () => {
       dataIndex: "guest",
       align: "center",
       className: "action-column-header",
+      filters: [
+        {
+          text: "Guest",
+          value: "Yes",
+        },
+        {
+          text: "User",
+          value: "No",
+        },
+      ],
+      onFilter: (value, record) => record.guest.indexOf(value) === 0,
     },
     {
       title: "Options",

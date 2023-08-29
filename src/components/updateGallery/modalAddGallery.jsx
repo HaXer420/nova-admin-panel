@@ -66,6 +66,14 @@ const ModalAddGallery = ({
     setAddProduct(false);
   };
 
+  const isFormIncomplete = () => {
+    return (
+      !title ||
+      !description ||
+      !image
+    );
+  };
+
   const createProduct = () => {
     let body = {
       title: title,
@@ -310,6 +318,7 @@ const ModalAddGallery = ({
               onClick={handleAddButtonClick}
               style={{ marginLeft: "2rem" }}
               type="primary"
+              disabled={isFormIncomplete()}
             >
               Add
             </Button>
