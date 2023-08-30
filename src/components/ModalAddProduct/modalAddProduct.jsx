@@ -5,7 +5,7 @@ import { addIcon, editIcon } from "../../assets";
 import { useSelector } from "react-redux";
 import { callApi } from "../../api/apiCaller";
 import routes from "../../api/routes";
-import { upload } from "../../helper/helper";
+import { RedNotify, upload } from "../../helper/helper";
 const ModalAddProduct = ({
   setShowModal,
   showModal,
@@ -116,6 +116,7 @@ const ModalAddProduct = ({
           <Input
             value={title}
             placeholder="Title"
+            maxLength={25} // Set the maximum character limit
             onChange={(e) => {
               setTitle(e.target.value);
               // console.log("onchange", { ...product, title: e.target.value });
@@ -143,6 +144,7 @@ const ModalAddProduct = ({
           <h2>Quantity</h2>
           <InputNumber
             value={count}
+            type="number"
             onChange={(e) => setCount(e)}
             min={0}
             placeholder="Quantity"
@@ -157,8 +159,9 @@ const ModalAddProduct = ({
           <div className="add-product-modal-amount-container">
             <InputNumber
               value={price}
+              type="number"
               onChange={(e) => {
-                setPrice(e);
+                  setPrice(e);
               }}
               prefix="$"
               min={0}
@@ -196,7 +199,18 @@ const ModalAddProduct = ({
           type="file"
           ref={fileInputRef}
           style={{ display: "none" }} // Hide the file input
-          onChange={upload((url) => setImage(url), setIsLoading)}
+          onChange={(ev) => {
+            const selectedFile = ev.target.files[0];
+    
+            // Check if the selected file is an image
+            if (selectedFile && selectedFile.type.startsWith("image/")) {
+            upload((url) => setImage(url), setIsLoading)([selectedFile]);
+          } else {
+            // Handle case where selected file is not an image
+            console.log("Please select an image file.");
+            RedNotify("Invalid file type. Please select an image");
+          }
+          }}
         />
         <div
           onClick={pickImageFile}

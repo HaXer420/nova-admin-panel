@@ -134,6 +134,7 @@ const ModalAddGallery = ({
           <Input
             value={title}
             placeholder="Title"
+            maxLength={25}
             onChange={(e) => {
               setTitle(e.target.value);
             }}
@@ -342,7 +343,40 @@ const ModalAddGallery = ({
           </>
         )}
 
-        {type === "photo" && (
+{type === "photo" && (
+  <>
+    <input
+      type="file"
+      ref={fileInputRef}
+      style={{ display: "none" }}
+      onChange={(ev) => {
+        const selectedFile = ev.target.files[0];
+
+        // Check if the selected file is an image
+        if (selectedFile && selectedFile.type.startsWith("image/")) {
+          upload((url) => setImage(url), setIsLoading)([selectedFile]);
+        } else {
+          // Handle case where selected file is not an image
+          console.log("Please select an image file.");
+          RedNotify("Invalid file type. Please select an image");
+        }
+      }}
+    />
+    <div
+      onClick={() =>  pickImageFile(fileInputRef)}
+      style={{ marginBottom: "2rem" }}
+      className="add-product-modal-input-title"
+    >
+      <h2>Photo</h2>
+      <div className="add-product-modal-image">
+        <img src={image ? image : dummyImage} alt="" />
+      </div>
+    </div>
+  </>
+)}
+
+
+        {/* {type === "photo" && (
           <>
             <input
               type="file"
@@ -353,7 +387,7 @@ const ModalAddGallery = ({
               }
             />
             <div
-              onClick={() => pickImageFile(fileInputRef)}
+              onClick={() =>  pickImageFile(fileInputRef)}
               style={{ marginBottom: "2rem" }}
               className="add-product-modal-input-title"
             >
@@ -363,7 +397,7 @@ const ModalAddGallery = ({
               </div>
             </div>
           </>
-        )}
+        )} */}
 
         <div className="modal-btn-container"></div>
         <div style={{ marginBottom: "3rem" }}>

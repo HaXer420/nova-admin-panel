@@ -129,6 +129,7 @@ const AddNewService = () => {
         <h3>Title</h3>:
         <Input
           value={title}
+          maxLength={25}
           onChange={(e) => setTitle(e.target.value)}
           style={{ maxWidth: "50%", marginLeft: "2rem" }}
           placeholder="Service title"
@@ -170,14 +171,37 @@ const AddNewService = () => {
         type="file"
         ref={fileInputRef}
         style={{ display: "none" }} // Hide the file input
-        onChange={upload((url) => setImage(url), setIsLoading)}
+        onChange={ 
+          (ev) => {
+            const selectedFile = ev.target.files[0];
+    
+            // Check if the selected file is an image
+            if (selectedFile && selectedFile.type.startsWith("image/")) {
+            upload((url) => setImage(url), setIsLoading)([selectedFile])
+          } else {
+            // Handle case where selected file is not an image
+            console.log("Please select an image file.");
+            RedNotify("Invalid file type. Please select an image");
+          }
+          }}
       />
 
       <input
         type="file"
         ref={fileInputRef1}
         style={{ display: "none" }} // Hide the file input
-        onChange={upload((url) => setImage1(url), setIsLoading)}
+        onChange={(ev) => {
+          const selectedFile = ev.target.files[0];
+  
+          // Check if the selected file is an image
+          if (selectedFile && selectedFile.type.startsWith("image/")) {
+            upload((url) => setImage1(url), setIsLoading)
+          } else {
+            // Handle case where selected file is not an image
+            console.log("Please select an image file.");
+            RedNotify("Invalid file type. Please select an image");
+          }
+          }}
       />
 
       <div className="add-service-input-main-container">
@@ -196,6 +220,7 @@ const AddNewService = () => {
             <h3>Title</h3>:
             <Input
               value={des1Title}
+              maxLength={25}
               onChange={(e) => setDes1Title(e.target.value)}
               style={{ maxWidth: "50%", marginLeft: "2rem" }}
               placeholder="Title "
@@ -271,6 +296,7 @@ const AddNewService = () => {
             <InputNumber
               style={{ marginLeft: "3rem", width: "100%" }}
               value={count}
+              type="number"
               onChange={(e) => {
                 setCount(e);
               }}
