@@ -4,7 +4,7 @@ export const BASE_URL = "https://rxje2xzpme.us-east-1.awsapprunner.com/api/v1";
 export default {
   // -----AUTH------//
   signUp: BASE_URL + "/user/signup",
-  signIn: BASE_URL + "/user/login",
+  signIn: BASE_URL + "/user/testLogin",
   upload: BASE_URL + "/user/upload",
   sendOTP: BASE_URL + "/user/sendOTP",
   verifyOTP: BASE_URL + "/user/verify",
