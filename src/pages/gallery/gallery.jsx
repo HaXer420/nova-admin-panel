@@ -30,7 +30,7 @@ const Gallery = () => {
       // console.log(111111,res?.data?.data[0].title);
       setProducts(res?.data?.data);
       // console.log('aaaaaaa',res?.data?.data[0].media);
-      console.log("res of get games", res);
+      console.log("res of get gallery", res);
       // setShowModal(false);
     };
 
@@ -42,8 +42,8 @@ const Gallery = () => {
   const DeleteProduct = (item) => {
     setGetProduct(false);
     let getRes = (res) => {
-      console.log("deleting game");
-      console.log("res of delete game", res);
+      console.log("deleting gallery");
+      console.log("res of gallery", res);
       setGetProduct(true);
     };
 
@@ -191,7 +191,7 @@ const Gallery = () => {
         <Breadcrumb.Item>Gallery</Breadcrumb.Item>
       </Breadcrumb>
       <div className="configure-server-roles-main-heading-container">
-        <h1>Games</h1>  
+        <h1>Gallery</h1>  
         <div
           onClick={() => {
             setAddProduct(true);

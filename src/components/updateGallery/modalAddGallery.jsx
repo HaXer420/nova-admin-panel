@@ -15,6 +15,7 @@ import { callApi } from "../../api/apiCaller";
 import routes from "../../api/routes";
 import { upload } from "../../helper/helper";
 import FadeLoader from "react-spinners/FadeLoader";
+import { GreenNotify, RedNotify } from "../../helper/helper";
 
 const ModalAddGallery = ({
   setShowModal,
@@ -177,7 +178,57 @@ const ModalAddGallery = ({
 
         {type === "video" && (
           <>
-            <input
+          <input
+  type="file"
+  ref={fileInputRef}
+  style={{ display: "none" }}
+  accept="image/*, video/*" // Accept only image and video file types
+  onChange={(e) => {
+    setLoader(true);
+
+    const selectedFile = e.target.files[0];
+
+    if (selectedFile && selectedFile.type.startsWith("video/")) {
+      var myHeaders = new Headers();
+      myHeaders.append(
+        "Authorization",
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWJmZDdhMGQ4YzRjODhiMzc0MDQ3YyIsImlhdCI6MTY3OTU1NjEwNn0.2j-EGacy-8AKMS6ukSlwl_irW0h7PPNWha52TTWTM54"
+      );
+
+      var formdata = new FormData();
+      formdata.append("file", selectedFile);
+
+      var requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: formdata,
+        redirect: "follow",
+      };
+
+      fetch("https://rxje2xzpme.us-east-1.awsapprunner.com/api/v1/user/upload", requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+          setImage(result.url);
+          setLoader(false);
+
+          // Set the video source to the selected video
+          const videoElement = document.getElementById("videoPreview");
+          if (videoElement) {
+            videoElement.src = result.url;
+            videoElement.load(); // Load and play the video
+          }
+        })
+        .catch((error) => console.log("error", error));
+    } else {
+      // Handle invalid file type
+      console.log("Invalid file type. Please select an image or video.");
+      setLoader(false);
+      RedNotify("Invalid file type. Please select an image or video.");
+    }
+  }}
+/>
+
+            {/* <input
               type="file"
               ref={fileInputRef}
               style={{ display: "none" }}
@@ -200,7 +251,7 @@ const ModalAddGallery = ({
                   redirect: "follow",
                 };
 
-                fetch("http://localhost:4500/api/v1/user/upload", requestOptions)
+                fetch("https://rxje2xzpme.us-east-1.awsapprunner.com/api/v1/user/upload", requestOptions)
                 .then((response) => response.json())
                 .then((result) => {
                   setImage(result.url);
@@ -216,7 +267,7 @@ const ModalAddGallery = ({
                 })
                 .catch((error) => console.log("error", error));
               }}
-            />
+            /> */}
             <div
               onClick={() => pickImageFile(fileInputRef)}
               style={{ marginBottom: "2rem" }}
@@ -239,6 +290,11 @@ const ModalAddGallery = ({
               ref={fileInputRef1}
               style={{ display: "none" }}
               onChange={(e) => {
+
+                const selectedFile = e.target.files[0];
+
+                if (selectedFile && selectedFile.type.startsWith("image/")) {
+
                 var myHeaders = new Headers();
                 myHeaders.append(
                   "Authorization",
@@ -256,13 +312,20 @@ const ModalAddGallery = ({
                 };
 
                 fetch(
-                  "http://localhost:4500/api/v1/user/upload",
+                  "https://rxje2xzpme.us-east-1.awsapprunner.com/api/v1/user/upload",
                   requestOptions
                 )
                   .then((response) => response.json())
                   .then((result) => setThumbnail(result.url))
                   //  console.log(result))
                   .catch((error) => console.log("error", error));
+
+                } else {
+                  // Handle invalid file type
+                  console.log("Invalid file type. Please select an image or video.");
+                  setLoader(false);
+                  RedNotify("Invalid file type. Please select an image");
+                }
               }}
             />
             <div
