@@ -38,6 +38,15 @@ const AddNewService = () => {
   const [image, setImage] = useState(dummyImage);
   const [image1, setImage1] = useState(dummyImage);
 
+
+  const isFormIncomplete = () => {
+    return (
+      !title ||
+      descriptions.length < 1 ||
+      options.length < 1
+    );
+  };
+
   const pickImageFile = () => {
     fileInputRef.current.click();
   };
@@ -195,7 +204,7 @@ const AddNewService = () => {
   
           // Check if the selected file is an image
           if (selectedFile && selectedFile.type.startsWith("image/")) {
-            upload((url) => setImage1(url), setIsLoading)
+            upload((url) => setImage1(url), setIsLoading)([selectedFile])
           } else {
             // Handle case where selected file is not an image
             console.log("Please select an image file.");
@@ -326,7 +335,7 @@ const AddNewService = () => {
         </div>
       </div>
 
-      <Button type="primary" onClick={createService}>
+      <Button type="primary" onClick={createService} disabled={isFormIncomplete()}>
         Create Service
       </Button>
       <div style={{ marginBottom: "5rem" }}></div>

@@ -32,6 +32,16 @@ const ModalAddProduct = ({
     console.log(`Checkbox checked: ${e.target.checked}`);
   };
 
+  const isFormIncomplete = () => {
+    return (
+      !title ||
+      !description ||
+      !image ||
+      !price || 
+      !count
+    );
+  };
+
   const pickImageFile = () => {
     fileInputRef.current.click();
   };
@@ -46,6 +56,8 @@ const ModalAddProduct = ({
     // Perform operations with the selected file(s)
     console.log(fileList);
   };
+
+  
 
   const createProduct = () => {
     let getRes = (res) => {
@@ -238,6 +250,7 @@ const ModalAddProduct = ({
               onClick={createProduct}
               style={{ marginLeft: "2rem" }}
               type="primary"
+              disabled={isFormIncomplete()}
             >
               Add Product
             </Button>
