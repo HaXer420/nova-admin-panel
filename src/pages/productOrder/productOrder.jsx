@@ -5,9 +5,12 @@ import { callApi } from "../../api/apiCaller";
 import routes from "../../api/routes";
 import Loader from "../../components/loader/loader";
 import moment from "moment";
+import ModalClientInfo from "../../components/clientInfo/modalclientInfo";
 
 const ProductOrder = () => {
   const [bookedProducts, setBookedProducts] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [client, setClient] = useState({});
   const [isloading, setIsLoading] = useState(false);
   const getAllProductBooked = () => {
     let getRes = (res) => {
@@ -70,6 +73,12 @@ const ProductOrder = () => {
       align: "center",
       className: "action-column-header",
     },
+     {
+      title: "Client Info",
+      dataIndex: "clientinfo",
+      align: "center",
+      className: "action-column-header",
+    },
     {
       title: "Price",
       dataIndex: "Price",
@@ -120,6 +129,17 @@ const ProductOrder = () => {
       email: item?.order?.client?.email,
       productName: item?.product?.title,
       orderNo: item?.order?.orderno,
+      clientinfo: (
+        <span
+          onClick={() => {
+            setShowModal(!showModal);
+            setClient(item?.order?.client);
+          }}
+          style={{ color: "#34ADF4", cursor: "pointer" }}
+        >
+          See
+        </span>
+      ),
       Price: `$${item?.amount}`,
       guest: item?.user.isTemp ? "Yes" : "No",
       quantity: item?.quantity,
@@ -144,6 +164,13 @@ const ProductOrder = () => {
   return (
     <div className="admin-products-main-container">
       <Loader loading={isloading} />
+      {showModal && (
+        <ModalClientInfo
+          showModal={showModal}
+          setShowModal={setShowModal}
+          client={client}
+        />
+      )}
       <Breadcrumb separator=">" className="bread-crumb">
         <div className="configure-server-home-icon">
           <img src={homeIcon} alt="home-icon" />

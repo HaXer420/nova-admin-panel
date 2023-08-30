@@ -50,6 +50,12 @@ const ServiceOrder = () => {
       className: "action-column-header",
     },
     {
+      title: "Service Location",
+      dataIndex: "servicelocation",
+      align: "center",
+      className: "action-column-header",
+    },
+    {
       title: "Order No.",
       dataIndex: "orderNo",
       align: "center",
@@ -130,6 +136,7 @@ const ServiceOrder = () => {
         </div>
       ),
       serviceTitle: item?.service?.title,
+      servicelocation: item?.store?.location?.address,
       orderNo: item?.order?.orderno,
       Price: `$${item?.amount}`,
       guest: item?.user.isTemp ? "Yes" : "No",
