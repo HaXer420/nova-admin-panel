@@ -86,6 +86,12 @@ const ProductOrder = () => {
       className: "action-column-header",
     },
     {
+      title: "Total Amount",
+      dataIndex: "totalamount",
+      align: "center",
+      className: "action-column-header",
+    },
+    {
       title: "Guest",
       dataIndex: "guest",
       align: "center",
@@ -140,7 +146,8 @@ const ProductOrder = () => {
           See
         </span>
       ),
-      Price: `$${item?.amount}`,
+      Price: `$${item?.price}`,
+      totalamount: `$${item?.amount}`,
       guest: item?.user.isTemp ? "Yes" : "No",
       quantity: item?.quantity,
       ispaid: (
