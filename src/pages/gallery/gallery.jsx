@@ -180,6 +180,7 @@ const Gallery = () => {
           showModalDes={showModalDes}
           setShowModalDes={setShowModalDes}
           description={pDescription}
+          headname={"Description"}
         />
       )}
       <Loader loading={isloading} />
