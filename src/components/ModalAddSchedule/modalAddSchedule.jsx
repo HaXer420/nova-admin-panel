@@ -102,8 +102,8 @@ const ModalAddSchedule = ({
           defaultValue={scheduleType}
           disabled={!addProduct}
           style={{
-            width: 220,
-            marginLeft: "2rem",
+            width: 100,
+            marginLeft: "0rem",
           }}
           onChange={(e) => {
             setscheduleType(e);
