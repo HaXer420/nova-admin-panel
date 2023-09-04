@@ -1,5 +1,5 @@
-export const BASE_URL = "https://rxje2xzpme.us-east-1.awsapprunner.com/api/v1";
-// export const BASE_URL = "http://localhost:4500/api/v1";
+// export const BASE_URL = "https://rxje2xzpme.us-east-1.awsapprunner.com/api/v1";
+export const BASE_URL = "http://localhost:4500/api/v1";
 
 export default {
   // -----AUTH------//
@@ -40,4 +40,22 @@ export default {
   getAllUser: BASE_URL + "/user",
   getState: BASE_URL + "/user/stats",
   getallReviews: BASE_URL + "/globalReviews/getall?limit=1000&sort=-createdAt",
+
+  //-------------Tax---------------//
+  getAllTax: BASE_URL + "/tax/getall",
+  createTax: BASE_URL + "/tax/create",
+  deleteTax: BASE_URL + "/tax/delete",
+  updateTax: BASE_URL + "/tax/update",
+
+  //-------------Schedule---------------//
+  getAllSchedule: BASE_URL + "/schedule/getall",
+  createSchedule: BASE_URL + "/schedule/create",
+  deleteSchedule: BASE_URL + "/schedule/delete",
+  updateSchedule: BASE_URL + "/schedule/update",
+
+  //-------------Info---------------//
+  getAllInfo: BASE_URL + "/info/getall",
+  createInfo: BASE_URL + "/info/create",
+  deleteInfo: BASE_URL + "/info/delete",
+  updateInfo: BASE_URL + "/info/update",
 };

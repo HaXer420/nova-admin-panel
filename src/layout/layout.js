@@ -4,6 +4,7 @@ import {
   homeIcon,
   logOutIcon,
   productIcon,
+  productIcon1,
   productOrder,
   redTrash,
   reviewIcon,
@@ -32,6 +33,9 @@ import Loader from "../components/loader/loader";
 import { GreenNotify, RedNotify } from "../helper/helper";
 import Dashboard from "../pages/dashboard/dashboard";
 import Reviews from "../pages/Reviews/reviews";
+import Tax from "../pages/tax/tax";
+import Schedule from "../pages/schedule/schedule";
+import Info from "../pages/info/info";
 
 const { Header, Content, Footer, Sider } = Layout;
 const LayoutDashboard = () => {
@@ -148,6 +152,30 @@ const LayoutDashboard = () => {
             Reviews
           </Menu.Item>
           <Menu.Item
+            style={{ marginBottom: "2rem" }}
+            onClick={() => navigate("/tax-list")}
+            icon={<img className="side-bar-icon" src={serviceOrder} />}
+            key="109"
+          >
+            Tax
+          </Menu.Item>
+          <Menu.Item
+            style={{ marginBottom: "2rem" }}
+            onClick={() => navigate("/schedule-list")}
+            icon={<img className="side-bar-icon" src={serviceIcon} />}
+            key="110"
+          >
+            Schedule
+          </Menu.Item>
+          <Menu.Item
+            style={{ marginBottom: "2rem" }}
+            onClick={() => navigate("/info-list")}
+            icon={<img className="side-bar-icon" src={productIcon} />}
+            key="111"
+          >
+            Info
+          </Menu.Item>
+          <Menu.Item
             style={{ marginTop: "5rem" }}
             icon={<img className="side-bar-icon" src={logOutIcon} />}
             onClick={logOut}
@@ -173,6 +201,9 @@ const LayoutDashboard = () => {
             <Route path="/update-service" element={<UpdateService />}></Route>
             <Route path="/user-list" element={<UserList />}></Route>
             <Route path="/reviews-list" element={<Reviews />}></Route>
+            <Route path="/tax-list" element={<Tax />}></Route>
+            <Route path="/schedule-list" element={<Schedule />}></Route>
+            <Route path="/info-list" element={<Info />}></Route>
             <Route
               path="/products-order-list"
               element={<ProductOrder />}

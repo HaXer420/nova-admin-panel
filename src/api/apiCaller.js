@@ -3,7 +3,6 @@ import configureAppStore from "../redux/store";
 import { DeviceUUID } from "device-uuid";
 import { accessToken } from "../redux/userDataSlice";
 
-
 const BASE_URL = "https://rxje2xzpme.us-east-1.awsapprunner.com/api/v1/";
 // export const BASE_URL = "http://localhost:4500/api/v1";
 
@@ -127,6 +126,7 @@ export const callApi = async (
   } catch (error) {
     //console.log("eror==================", error);
     // RedNotify("Network request failed");
+    console.log("ERROR", error);
     setloading(false);
     //console.log('Api call try catch error:', error.message);
   }
