@@ -92,6 +92,28 @@ const ProductOrder = () => {
       className: "action-column-header",
     },
     {
+      title: "Status",
+      dataIndex: "status",
+      align: "center",
+      className: "action-column-header",
+
+      filters: [
+        {
+          text: "Canceled",
+          value: "canceled",
+        },
+        {
+          text: "Pending",
+          value: "pending",
+        },
+        {
+          text: "Shipped",
+          value: "shipped",
+        },
+      ],
+      onFilter: (value, record) => record.status.indexOf(value) === 0,
+    },
+    {
       title: "Guest",
       dataIndex: "guest",
       align: "center",
@@ -148,6 +170,7 @@ const ProductOrder = () => {
       ),
       Price: `$${item?.price}`,
       totalamount: `$${item?.amount}`,
+      status: item?.status ? item?.status : "Old",
       guest: item?.user.isTemp ? "Yes" : "No",
       quantity: item?.quantity,
       ispaid: (
