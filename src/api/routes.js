@@ -1,5 +1,5 @@
-export const BASE_URL = "https://rxje2xzpme.us-east-1.awsapprunner.com/api/v1";
-// export const BASE_URL = "http://localhost:4500/api/v1";
+// export const BASE_URL = "https://rxje2xzpme.us-east-1.awsapprunner.com/api/v1";
+export const BASE_URL = "http://localhost:4500/api/v1";
 
 export default {
   // -----AUTH------//
@@ -58,4 +58,11 @@ export default {
   createInfo: BASE_URL + "/info/create",
   deleteInfo: BASE_URL + "/info/delete",
   updateInfo: BASE_URL + "/info/update",
+
+  //-------------Refund---------------//
+  refundService: BASE_URL + "/booking/refund",
+  refundProduct: BASE_URL + "/booking/refundproduct",
+
+  //-------------Service rder---------------//
+  updateProductOrder: BASE_URL + "/booking/updateproducteorder",
 };

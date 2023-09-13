@@ -6,12 +6,59 @@ import routes from "../../api/routes";
 import Loader from "../../components/loader/loader";
 import moment from "moment";
 import ModalClientInfo from "../../components/clientInfo/modalclientInfo";
+import { GreenNotify, RedNotify } from "../../helper/helper";
 
 const ProductOrder = () => {
   const [bookedProducts, setBookedProducts] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [client, setClient] = useState({});
   const [isloading, setIsLoading] = useState(false);
+
+
+  const cancelBooking = (item) => {
+
+    let getRes = (res) => {
+      setIsLoading(false);
+      GreenNotify("Cancelled")
+    };
+
+    callApi(
+      "PATCH",
+      routes.refundProduct + `/${item?.order?._id}/${item?._id}?user=${item?.user?._id}`,
+      null,
+      setIsLoading,
+      getRes,
+      (error) => {
+        RedNotify(error)
+        console.log("error", error);
+      }
+    );
+  }
+
+  const shipBooking = (item) => {
+
+    let getRes = (res) => {
+      setIsLoading(false);
+      GreenNotify("Shipped")
+    };
+
+    let body = {
+      status: "shipped",
+    }
+
+    callApi(
+      "PATCH",
+      routes.updateProductOrder + `/${item?._id}`,
+      body,
+      setIsLoading,
+      getRes,
+      (error) => {
+        RedNotify(error)
+        console.log("error", error);
+      }
+    );
+  }
+
   const getAllProductBooked = () => {
     let getRes = (res) => {
       setBookedProducts(res?.productorder);
@@ -114,6 +161,18 @@ const ProductOrder = () => {
       onFilter: (value, record) => record.status.indexOf(value) === 0,
     },
     {
+      title: "Ship Order",
+      dataIndex: "ship",
+      align: "right",
+      className: "action-column-header",
+    },
+    {
+      title: "Cancel Order",
+      dataIndex: "cancel",
+      align: "right",
+      className: "action-column-header",
+    },
+    {
       title: "Guest",
       dataIndex: "guest",
       align: "center",
@@ -171,6 +230,28 @@ const ProductOrder = () => {
       Price: `$${item?.price}`,
       totalamount: `$${item?.amount}`,
       status: item?.status ? item?.status : "Old",
+      ship: <Button
+      onClick={() => {
+        // setShowModal(false);
+        shipBooking(item)
+      }}
+      type="default"
+      disabled={item?.status !== "pending"}
+      danger
+    >
+      Ship
+    </Button>,
+      cancel: <Button
+      onClick={() => {
+        // setShowModal(false);
+        cancelBooking(item)
+      }}
+      type="default"
+      disabled={item?.status !== "pending"}
+      danger
+    >
+      Cancel
+    </Button>,
       guest: item?.user.isTemp ? "Yes" : "No",
       quantity: item?.quantity,
       ispaid: (

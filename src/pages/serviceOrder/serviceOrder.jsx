@@ -7,12 +7,34 @@ import routes from "../../api/routes";
 import moment from "moment";
 import Loader from "../../components/loader/loader";
 import OptionModal from "../../components/optionModal/optionModal";
+import { GreenNotify, RedNotify } from "../../helper/helper";
 
 const ServiceOrder = () => {
   const [bookedServices, setBookedServices] = useState([]);
   const [isloading, setIsLoading] = useState(false);
   const [showModalOption, setShowModalOption] = useState(false);
   const [optionsM, setOptionsM] = useState([]);
+
+  const cancelBooking = (item) => {
+
+    let getRes = (res) => {
+      setIsLoading(false);
+      GreenNotify("Cancelled")
+    };
+
+    callApi(
+      "PATCH",
+      routes.refundService + `/${item?.order?._id}/${item?._id}?user=${item?.user?._id}`,
+      null,
+      setIsLoading,
+      getRes,
+      (error) => {
+        RedNotify(error)
+        console.log("error", error);
+      }
+    );
+  }
+
   const getAllServicesBooked = () => {
     let getRes = (res) => {
       setBookedServices(res?.serviceorder);
@@ -125,6 +147,12 @@ const ServiceOrder = () => {
       ],
       onFilter: (value, record) => record.status.indexOf(value) === 0,
     },
+    {
+      title: "Cancel Booking",
+      dataIndex: "cancel",
+      align: "right",
+      className: "action-column-header",
+    },
   ];
 
   const data = bookedServices?.map((item) => {
@@ -158,7 +186,19 @@ const ServiceOrder = () => {
       ),
       bookingTime: moment(item?.starttime).format("DD-MM-YYYY HH:mm A"),
       status: item?.status,
+      cancel: <Button
+      onClick={() => {
+        // setShowModal(false);
+        cancelBooking(item)
+      }}
+      type="default"
+      disabled={item?.status !== "ongoing"}
+      danger
+    >
+      Cancel
+    </Button>
     };
+    
   });
 
   const getRowClassName = (record, index) => {
@@ -189,7 +229,7 @@ const ServiceOrder = () => {
         <Breadcrumb.Item>Services booking List</Breadcrumb.Item>
       </Breadcrumb>
       <div className="configure-server-roles-main-heading-container">
-        <h1>Products Order</h1> <div></div>
+        <h1>Services Order</h1> <div></div>
       </div>
       <div className="server-roles-tb-main-container">
         <Table

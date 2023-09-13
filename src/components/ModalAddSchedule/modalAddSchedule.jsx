@@ -191,6 +191,7 @@ const ModalAddSchedule = ({
               onClick={updateProduct}
               style={{ marginLeft: "2rem" }}
               type="primary"
+              disabled={isFormIncomplete()}
             >
               UpDate
             </Button>

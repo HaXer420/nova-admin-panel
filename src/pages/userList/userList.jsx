@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from "react";
 import "./userList.css";
 import { Breadcrumb, Button, Select, Table, Image } from "antd";
-import { crossIcon, homeIcon, redTrash, trueIcon } from "../../assets";
+import { crossIcon, editIcon, homeIcon, redTrash, trueIcon } from "../../assets";
 import { callApi } from "../../api/apiCaller";
 import routes from "../../api/routes";
 import Loader from "../../components/loader/loader";
 import moment from "moment/moment";
+import ModalUpdateUser from "../../components/ModalUpdateUser/modalUpdateUser";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
   const [isloading, setIsLoading] = useState(false);
+  const [adduser, setAdduser] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [user, setUser] = useState();
   const getAllUser = () => {
     let getRes = (res) => {
       console.log("res of user list", res);
@@ -79,6 +83,12 @@ const UserList = () => {
       defaultFilteredValue: ["No"],
       onFilter: (value, record) => record.guest.indexOf(value) === 0,
     },
+    {
+      title: "Edit",
+      dataIndex: "edit",
+      align: "right",
+      className: "action-column-header",
+    },
   ];
 
   const data = users?.map((item, index) => {
@@ -99,6 +109,19 @@ const UserList = () => {
         </div>
       ),
       guest: item?.isTemp ? "Yes" : "No",
+      edit: (
+        <div
+          onClick={() => {
+            setUser(item);
+            // dispatch(productItem(item));
+            setShowModal(true);
+            setAdduser(false);
+          }}
+          className="product-list-edit-icon"
+        >
+          <img src={editIcon} />
+        </div>
+      ),
     };
   });
 
@@ -111,6 +134,16 @@ const UserList = () => {
   return (
     <div className="admin-products-main-container">
       <Loader loading={isloading} />
+      {showModal && (
+        <ModalUpdateUser
+          showModal={showModal}
+          setShowModal={setShowModal}
+          item={user}
+          setIsLoading={setIsLoading}
+          addProduct={adduser}
+          setAddProduct={setAdduser}
+        />
+      )}
       <Breadcrumb separator=">" className="bread-crumb">
         <div className="configure-server-home-icon">
           <img src={homeIcon} alt="home-icon" />
