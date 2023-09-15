@@ -7,8 +7,10 @@ import {
   productIcon,
   productIcon1,
   redTrash,
+  reviewIcon,
   serviceIcon,
   serviceIcon1,
+  serviceOrder,
   userIcon1,
 } from "../../assets";
 import Clock from "react-clock";
@@ -37,6 +39,11 @@ const Dashboard = () => {
       title: "Total Service",
       count: state?.services,
       icon: serviceIcon1,
+    },
+    {
+      title: "Total Reviews",
+      count: state?.globalreview,
+      icon: userIcon1,
     },
     {
       title: "Product Order",
