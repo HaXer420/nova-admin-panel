@@ -8,12 +8,37 @@ import { addIcon, editIcon, homeIcon, redTrash } from "../../assets";
 import { Table } from "antd";
 import moment from "moment";
 import DescriptionModal from "../../components/descriptionModal/descriptionModal";
+import UpdateTax from "../../components/UpdateReview/UpdateReview";
 
 const Reviews = () => {
   const [isloading, setIsLoading] = useState(true);
   const [reviews, setReviews] = useState([]);
   const [showModalDes, setShowModalDes] = useState(false);
   const [pDescription, setPdescription] = useState("");
+  const [getProduct, setGetProduct] = useState(false);
+  const [product, setProduct] = useState();
+  const [addProduct, setAddProduct] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+
+  const DeleteProduct = (item) => {
+    setGetProduct(false);
+    let getRes = (res) => {
+      //console.log("res of delete product", res);
+      setGetProduct(true);
+    };
+
+    callApi(
+      "DELETE",
+      `${routes.deleteReviews}/${item?._id}`,
+      null,
+      setIsLoading,
+      getRes,
+      (error) => {
+        console.log("error", error);
+      }
+    );
+  };
 
   const getReview = () => {
     let getRes = (res) => {
@@ -33,7 +58,7 @@ const Reviews = () => {
       }
     );
   };
-  useEffect(() => getReview(), []);
+  useEffect(() => getReview(), [showModal,getProduct]);
 
   const columns = [
     {
@@ -53,6 +78,18 @@ const Reviews = () => {
     {
       title: "Date",
       dataIndex: "date",
+      align: "right",
+      className: "action-column-header",
+    },
+    {
+      title: "Delete",
+      dataIndex: "delete",
+      align: "right",
+      className: "action-column-header",
+    },
+    {
+      title: "Edit",
+      dataIndex: "edit",
       align: "right",
       className: "action-column-header",
     },
@@ -82,6 +119,27 @@ const Reviews = () => {
         </div>
       ),
       date: moment(item?.createdAt).format("DD MMM, YYYY"),
+      delete: (
+        <div
+          onClick={() => DeleteProduct(item)}
+          className="server-roles-trash-btn"
+        >
+          <img src={redTrash} alt="" />
+        </div>
+      ),
+      edit: (
+        <div
+          onClick={() => {
+            setProduct(item);
+            // dispatch(productItem(item));
+            setShowModal(true);
+            setAddProduct(false);
+          }}
+          className="product-list-edit-icon"
+        >
+          <img src={editIcon} />
+        </div>
+      ),
     };
   });
 
@@ -95,6 +153,16 @@ const Reviews = () => {
   return (
     <div className="admin-products-main-container">
       <Loader loading={isloading} />
+      {showModal && (
+        <UpdateTax
+          showModal={showModal}
+          setShowModal={setShowModal}
+          item={product}
+          setIsLoading={setIsLoading}
+          addProduct={addProduct}
+          setAddProduct={setAddProduct}
+        />
+      )}
       {showModalDes && (
         <DescriptionModal
           showModalDes={showModalDes}

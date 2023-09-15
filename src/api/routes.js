@@ -41,6 +41,11 @@ export default {
   getState: BASE_URL + "/user/stats",
   getallReviews: BASE_URL + "/globalReviews/getall?limit=1000&sort=-createdAt",
 
+  // -------------Review-------------//
+  deleteReviews: BASE_URL + "/globalReviews/delete",
+  updateReviews: BASE_URL + "/globalReviews/update",
+  getallReviews: BASE_URL + "/globalReviews/getall?limit=1000&sort=-createdAt",
+
   //-------------Tax---------------//
   getAllTax: BASE_URL + "/tax/getall",
   createTax: BASE_URL + "/tax/create",
