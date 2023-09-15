@@ -80,6 +80,9 @@ const Reviews = () => {
       dataIndex: "date",
       align: "right",
       className: "action-column-header",
+      sorter: (a, b) =>
+        moment(a.date, "DD-MM-YYYY").unix() -
+        moment(b.date, "DD-MM-YYYY").unix(),
     },
     {
       title: "Delete",
@@ -118,7 +121,7 @@ const Reviews = () => {
           </p>
         </div>
       ),
-      date: moment(item?.createdAt).format("DD MMM, YYYY"),
+      date: moment(item?.createdAt).format("DD MM, YYYY"),
       delete: (
         <div
           onClick={() => DeleteProduct(item)}
