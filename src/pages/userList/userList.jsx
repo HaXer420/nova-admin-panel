@@ -7,12 +7,14 @@ import routes from "../../api/routes";
 import Loader from "../../components/loader/loader";
 import moment from "moment/moment";
 import ModalUpdateUser from "../../components/ModalUpdateUser/modalUpdateUser";
+import { GreenNotify } from "../../helper/helper";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
   const [isloading, setIsLoading] = useState(false);
   const [adduser, setAdduser] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [getServiceapi, setGetServiceApi] = useState(false);
   const [user, setUser] = useState();
   const getAllUser = () => {
     let getRes = (res) => {
@@ -25,9 +27,31 @@ const UserList = () => {
     });
   };
 
+  const deleteService = (id) => {
+    setGetServiceApi(false);
+    let getRes = (res) => {
+      console.log("res of deleteUser", res);
+      GreenNotify("User/Guest is deleted successfully");
+      setGetServiceApi(true);
+      // setShowModal(false);
+    };
+
+    callApi(
+      "DELETE",
+      `${routes.deleteUser}/${id}`,
+      null,
+      setIsLoading,
+      getRes,
+      (error) => {
+        console.log("error", error);
+      }
+    );
+  };
+
+
   useEffect(() => {
     getAllUser();
-  }, []);
+  }, [getServiceapi]);
   const columns = [
     {
       title: "First Name",
@@ -89,6 +113,12 @@ const UserList = () => {
       align: "right",
       className: "action-column-header",
     },
+    {
+      title: "Delete",
+      dataIndex: "delete",
+      align: "center",
+      className: "action-column-header",
+    },
   ];
 
   const data = users?.map((item, index) => {
@@ -120,6 +150,14 @@ const UserList = () => {
           className="product-list-edit-icon"
         >
           <img src={editIcon} />
+        </div>
+      ),
+      delete: (
+        <div
+          onClick={() => deleteService(item?._id)}
+          className="server-roles-trash-btn"
+        >
+          <img src={redTrash} alt="red-trash" />
         </div>
       ),
     };

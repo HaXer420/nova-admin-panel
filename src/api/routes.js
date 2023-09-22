@@ -13,6 +13,7 @@ export default {
   verifyOTPresetPassword: BASE_URL + "/user/verifyOTPResetPassword",
   logOut: BASE_URL + "/user/logout",
   updateUser: BASE_URL + "/user",
+  deleteUser: BASE_URL + "/user",
 
   // -----------Products--------------//
 
