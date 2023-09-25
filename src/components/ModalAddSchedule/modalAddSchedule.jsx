@@ -184,7 +184,7 @@ const ModalAddSchedule = ({
               type="primary"
               disabled={isFormIncomplete()}
             >
-              Add Tax
+              Add Schedule
             </Button>
           ) : (
             <Button
