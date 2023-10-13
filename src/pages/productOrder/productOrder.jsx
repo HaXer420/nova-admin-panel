@@ -252,7 +252,7 @@ const ProductOrder = () => {
     >
       Cancel
     </Button>,
-      guest: item?.user.isTemp ? "Yes" : "No",
+      guest: item?.user?.isTemp ? "Yes" : "No",
       quantity: item?.quantity,
       ispaid: (
         <div className="server-roles-trash-btn">

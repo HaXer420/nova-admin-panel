@@ -167,7 +167,7 @@ const ServiceOrder = () => {
       servicelocation: item?.store?.location?.address,
       orderNo: item?.order?.orderno,
       Price: `$${item?.amount}`,
-      guest: item?.user.isTemp ? "Yes" : "No",
+      guest: item?.user?.isTemp ? "Yes" : "No",
       options: (
         <div
           onClick={() => {
