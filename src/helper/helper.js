@@ -7,7 +7,7 @@ const AWS = require('aws-sdk');
 AWS.config.update({
   accessKeyId: 'AKIAWB3UZU7UHGVRI5HB',
   secretAccessKey: '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',
-  region: 'us-east-2'
+  region: 'us-east-1'
 });
 const S3 = new AWS.S3();
 
@@ -85,7 +85,7 @@ const uploadImageOnS3 = async (src, cb) => {
               console.log("Hiello!")
               cb(reader.result)
               const params = {
-                  Bucket: 'drivebuddyz',
+                  Bucket: 'novathreadbucket',
                   Key: `${10000 + Math.round(Math.random() * 10000)}.png`,
                   Body: new Buffer(reader.result.replace(/^data:image\/\w+;base64,/, ""), 'base64'),
               };
