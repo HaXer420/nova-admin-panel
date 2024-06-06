@@ -206,7 +206,8 @@ const ModalAddGallery = ({
         redirect: "follow",
       };
 
-      fetch("https://rxje2xzpme.us-east-1.awsapprunner.com/api/v1/user/upload", requestOptions)
+      // fetch("https://rxje2xzpme.us-east-1.awsapprunner.com/api/v1/user/upload", requestOptions)
+      fetch("https://kxjrpib7ef.us-east-1.awsapprunner.com/api/v1/user/upload", requestOptions)
         .then((response) => response.json())
         .then((result) => {
           setImage(result.url);
@@ -253,6 +254,7 @@ const ModalAddGallery = ({
                 };
 
                 fetch("https://rxje2xzpme.us-east-1.awsapprunner.com/api/v1/user/upload", requestOptions)
+                fetch("https://kxjrpib7ef.us-east-1.awsapprunner.com/api/v1/user/upload", requestOptions)
                 .then((response) => response.json())
                 .then((result) => {
                   setImage(result.url);
@@ -312,10 +314,8 @@ const ModalAddGallery = ({
                   redirect: "follow",
                 };
 
-                fetch(
-                  "https://rxje2xzpme.us-east-1.awsapprunner.com/api/v1/user/upload",
-                  requestOptions
-                )
+                // fetch("https://rxje2xzpme.us-east-1.awsapprunner.com/api/v1/user/upload", requestOptions)
+                fetch("https://kxjrpib7ef.us-east-1.awsapprunner.com/api/v1/user/upload", requestOptions)
                   .then((response) => response.json())
                   .then((result) => setThumbnail(result.url))
                   //  console.log(result))
